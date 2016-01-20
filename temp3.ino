@@ -1,5 +1,5 @@
 // This #include statement was automatically added by the Particle IDE.
-#include "SparkFun-Spark-Phant/SparkFun-Spark-Phant.h"
+//#include "SparkFun-Spark-Phant/SparkFun-Spark-Phant.h"
 
 // This #include statement was automatically added by the Particle IDE.
 #include "OneWire/OneWire.h"
@@ -16,11 +16,11 @@
 OneWire oneWire(ONE_WIRE_BUS);          // DS18B20 Thermometer Stuff
 DallasTemperature sensors(&oneWire);    // DS18B20 Thermometer Stuff
 
-const char server[] = "data.sparkfun.com"; // Phant destination server
+/*const char server[] = "data.sparkfun.com"; // Phant destination server
 const char publicKey[] = "8dzjwZ4NY3uJwJR71lOZ"; // Phant public key
 const char privateKey[] = "pzRd851bjPiebeZrD2z4"; // Phant private key
 Phant phant(server, publicKey, privateKey); // Create a Phant object
-
+*/
 SparkCorePolledTimer updateTimer(25000); //Create a timer object and set it's timeout in milliseconds
 void OnTimer(void); //Prototype for timer callback method
 
@@ -95,7 +95,7 @@ void OnTimer(void) { //Handler for the timer, will be called automatically
     }else{
         update18B20Temp(Thermometer1, InTempC);
         Temp1 = InTempC;
-         phant.add("temp1", Temp1);
+//         phant.add("temp1", Temp1);
     }
 //    Blynk.virtualWrite(1, Temp1);
     delay(3000);
@@ -103,7 +103,7 @@ void OnTimer(void) { //Handler for the timer, will be called automatically
     update18B20Temp(Thermometer2, InTempC);
     if ( InTempC > -123) {
     Temp2 = InTempC;
-    phant.add("temp2", Temp2);
+//    phant.add("temp2", Temp2);
     }else{
         update18B20Temp(Thermometer2, InTempC);
         Temp2 = InTempC;
@@ -115,11 +115,11 @@ void OnTimer(void) { //Handler for the timer, will be called automatically
     update18B20Temp(Thermometer3, InTempC);
     if ( InTempC > -123) {
     Temp3 = InTempC;
-    phant.add("temp3", Temp3);
+//    phant.add("temp3", Temp3);
     }else{
         update18B20Temp(Thermometer3, InTempC);
         Temp3 = InTempC;
-        phant.add("temp3", Temp3);
+//        phant.add("temp3", Temp3);
     }
 //    Blynk.virtualWrite(3, Temp3);
     delay(3000);
@@ -127,11 +127,11 @@ void OnTimer(void) { //Handler for the timer, will be called automatically
     update18B20Temp(Thermometer4, InTempC);
     if ( InTempC > -123) {
     Temp4 = InTempC;
-    phant.add("temp4", Temp4);
+//    phant.add("temp4", Temp4);
     }else{
         update18B20Temp(Thermometer4, InTempC);
         Temp4 = InTempC;
-        phant.add("temp4", Temp4);
+//        phant.add("temp4", Temp4);
     }
 //    Blynk.virtualWrite(4, Temp4);
     delay(3000);
@@ -139,22 +139,24 @@ void OnTimer(void) { //Handler for the timer, will be called automatically
     update18B20Temp(Thermometer5, InTempC);
     if ( InTempC > -123) {
     Temp5 = InTempC;
-    phant.add("temp5", Temp5);
+//    phant.add("temp5", Temp5);
     }else{
         update18B20Temp(Thermometer5, InTempC);
         Temp5 = InTempC;
-        phant.add("temp5", Temp5);
+//        phant.add("temp5", Temp5);
     }
 //    Blynk.virtualWrite(5, Temp5);
     delay(3000);
 
     sprintf(resultstr, "{\"Temp1\":%f,\"Temp2\":%f,\"Temp3\":%f,\"Temp4\":%f,\"Temp5\":%f}", Temp1, Temp2, Temp3, Temp4, Temp5); //Write sensor data to string
-
+/*
     TCPClient client;
     if (client.connect(server, 80)) // Connect to the server
         {
             client.print(phant.post());
         }
+
+  */
 //left out due to updatetimer in      delay(5000); // READ DELAY - TOOK THIS OUT AND IT GOT JUMPY WITH -127'S C AND 196'S F
 
 
