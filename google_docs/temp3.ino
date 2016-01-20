@@ -9,7 +9,7 @@ OneWire oneWire(ONE_WIRE_BUS);          // DS18B20 Thermometer Stuff
 DallasTemperature sensors(&oneWire);    // DS18B20 Thermometer Stuff
 
 
-SparkCorePolledTimer updateTimer(25000); //Create a timer object and set it's timeout in milliseconds
+SparkCorePolledTimer updateTimer(5000); //Create a timer object and set it's timeout in milliseconds
 void OnTimer(void); //Prototype for timer callback method
 
 DeviceAddress Thermometer1 = { 0x28, 0xD2, 0x18, 0xF1, 0x4, 0x0, 0x0, 0x96 };
@@ -43,8 +43,6 @@ void setup(){
     sensors.setResolution(Thermometer4, TEMPERATURE_PRECISION);
     sensors.setResolution(Thermometer5, TEMPERATURE_PRECISION);
 
-
-
     delay(5000); // Allow board to settle
 
   Particle.variable("result", resultstr, STRING);  //Spark variable "result" to store sensor data string
@@ -62,54 +60,24 @@ void OnTimer(void)
     sensors.requestTemperatures();
 
     update18B20Temp(Thermometer1, InTempC);
-    if ( InTempC > -123)
-      {
       Temp1 = InTempC;
-      }else{
-        update18B20Temp(Thermometer1, InTempC);
-        Temp1 = InTempC;
-    }
-    delay(3000);
+      delay(1000);
 
     update18B20Temp(Thermometer2, InTempC);
-      if ( InTempC > -123)
-        {
-          Temp2 = InTempC;
-        }else{
-          update18B20Temp(Thermometer2, InTempC);
-          Temp2 = InTempC;
-        }
-    delay(3000);
+      Temp2 = InTempC;
+      delay(1000);
 
     update18B20Temp(Thermometer3, InTempC);
-      if ( InTempC > -123)
-        {
-          Temp3 = InTempC;
-        }else{
-          update18B20Temp(Thermometer3, InTempC);
-          Temp3 = InTempC;
-        }
-    delay(3000);
+      Temp3 = InTempC;
+      delay(1000);
 
     update18B20Temp(Thermometer4, InTempC);
-      if ( InTempC > -123)
-        {
-          Temp4 = InTempC;
-        }else{
-          update18B20Temp(Thermometer4, InTempC);
-          Temp4 = InTempC;
-        }
-    delay(3000);
+      Temp4 = InTempC;
+      delay(1000);
 
     update18B20Temp(Thermometer5, InTempC);
-      if ( InTempC > -123)
-        {
-          Temp5 = InTempC;
-        }else{
-          update18B20Temp(Thermometer5, InTempC);
-          Temp5 = InTempC;
-        }
-    delay(3000);
+      Temp5 = InTempC;
+      delay(1000);
 
     sprintf(resultstr, "{\"Temp1\":%f,\"Temp2\":%f,\"Temp3\":%f,\"Temp4\":%f,\"Temp5\":%f}", Temp1, Temp2, Temp3, Temp4, Temp5); //Write sensor data to string
 
