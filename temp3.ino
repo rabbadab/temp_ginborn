@@ -60,11 +60,11 @@ void OnTimer(void)
     { //Handler for the timer, will be called automatically
         // DS18B20
     sensors.requestTemperatures();
+
     update18B20Temp(Thermometer1, InTempC);
     if ( InTempC > -123)
       {
       Temp1 = InTempC;
-      phant.add("temp1", Temp1);
       }else{
         update18B20Temp(Thermometer1, InTempC);
         Temp1 = InTempC;
