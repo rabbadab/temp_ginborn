@@ -3,11 +3,19 @@
 #include "spark-dallas-temperature.h"
 #include "SparkCorePolledTimer.h"
 
+#include "blynk.h"
+#include "BlynkSimpleParticle.h"
+
+#define BLYNK_DEBUG // Uncomment this to see debug prints
+#define BLYNK_PRINT Serial
+
 #define ONE_WIRE_BUS D4 // Data wire is plugged into pin D0 on the particle
 #define TEMPERATURE_PRECISION 12         // DS18B20 Thermometer Stuff
 OneWire oneWire(ONE_WIRE_BUS);          // DS18B20 Thermometer Stuff
 DallasTemperature sensors(&oneWire);    // DS18B20 Thermometer Stuff
 
+//Blynk auth
+char auth[] = "b5bcca6aed404a20be878d56789f23dc";
 
 SparkCorePolledTimer updateTimer(5000); //Create a timer object and set it's timeout in milliseconds
 void OnTimer(void); //Prototype for timer callback method
@@ -45,12 +53,16 @@ void setup(){
 
     delay(5000); // Allow board to settle
 
-  Particle.variable("result", resultstr, STRING);  //Spark variable "result" to store sensor data string
+//Blynk auth
+    Blynk.begin(auth);
+
+    Particle.variable("result", resultstr, STRING);  //Spark variable "result" to store sensor data string
 
 }
 
 void loop()
   {
+    Blynk.run();
     updateTimer.Update();
   }
 
@@ -61,23 +73,28 @@ void OnTimer(void)
 
     update18B20Temp(Thermometer1, InTempC);
       Temp1 = InTempC;
-      delay(1000);
+    //  Blynk.virtualWrite(1, Temp1);
+    //  delay(1000);
 
     update18B20Temp(Thermometer2, InTempC);
       Temp2 = InTempC;
-      delay(1000);
+  //    Blynk.virtualWrite(2, Temp2);
+  //    delay(1000);
 
     update18B20Temp(Thermometer3, InTempC);
       Temp3 = InTempC;
-      delay(1000);
+  //    Blynk.virtualWrite(3, Temp3);
+    //  delay(1000);
 
     update18B20Temp(Thermometer4, InTempC);
       Temp4 = InTempC;
-      delay(1000);
+  //    Blynk.virtualWrite(4, Temp4);
+  //    delay(1000);
 
     update18B20Temp(Thermometer5, InTempC);
       Temp5 = InTempC;
-      delay(1000);
+  //    Blynk.virtualWrite(5, Temp5);
+    //  delay(1000);
 
     sprintf(resultstr, "{\"Temp1\":%f,\"Temp2\":%f,\"Temp3\":%f,\"Temp4\":%f,\"Temp5\":%f}", Temp1, Temp2, Temp3, Temp4, Temp5); //Write sensor data to string
 
@@ -87,4 +104,21 @@ void OnTimer(void)
 void update18B20Temp(DeviceAddress deviceAddress, double &tempC)
   {
     tempC = sensors.getTempC(deviceAddress);
+
+    if ( Temp1 < 90 && Temp1 > -120) {
+        Blynk.virtualWrite(1, Temp1);
+  //      Serial.println(Temp1);
+    }
+    if ( Temp2 < 90 && Temp2 > -120) {
+        Blynk.virtualWrite(2, Temp2);
+    }
+    if ( Temp3 < 90 && Temp3 > -120) {
+        Blynk.virtualWrite(3, Temp3);
+    }
+    if ( Temp4 < 90 && Temp4 > -120) {
+        Blynk.virtualWrite(4, Temp4);
+    }
+    if ( Temp5 < 90 && Temp5 > -120) {
+        Blynk.virtualWrite(5, Temp5);
+    }
   }
