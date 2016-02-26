@@ -66,12 +66,13 @@ void setup(){
     sensors.setResolution(Thermometer7, TEMPERATURE_PRECISION);
     sensors.setResolution(Thermometer8, TEMPERATURE_PRECISION);
 
+ Particle.variable("result", resultstr, STRING);  //Spark variable "result" to store sensor data str
     delay(5000); // Allow board to settle
 
 //Blynk auth
     Blynk.begin(auth);
 
-    Particle.variable("resultat", resultstr, STRING);  //Spark variable "result" to store sensor data string
+ //   Particle.variable("resultat", resultstr, STRING);  //Spark variable "result" to store sensor data string
 
 }
 
@@ -88,44 +89,29 @@ void OnTimer(void)
 
     update18B20Temp(Thermometer1, InTempC);
       Temp1 = InTempC;
-    //  Blynk.virtualWrite(1, Temp1);
-    //  delay(1000);
 
     update18B20Temp(Thermometer2, InTempC);
       Temp2 = InTempC;
-  //    Blynk.virtualWrite(2, Temp2);
-  //    delay(1000);
 
     update18B20Temp(Thermometer3, InTempC);
       Temp3 = InTempC;
-  //    Blynk.virtualWrite(3, Temp3);
-    //  delay(1000);
 
     update18B20Temp(Thermometer4, InTempC);
       Temp4 = InTempC;
-  //    Blynk.virtualWrite(4, Temp4);
-  //    delay(1000);
 
     update18B20Temp(Thermometer5, InTempC);
       Temp5 = InTempC;
     update18B20Temp(Thermometer6, InTempC);
       Temp6 = InTempC;
-      Serial.println("temp6");
-      Serial.println(Temp6);
     update18B20Temp(Thermometer7, InTempC);
       Temp7 = InTempC;
-      Serial.println("temp7");
-      Serial.println(Temp7);
     update18B20Temp(Thermometer8, InTempC);
       Temp8 = InTempC;
-      Serial.println("temp8");
-      Serial.println(Temp8);
-  //    Blynk.virtualWrite(5, Temp5);
+   //    Blynk.virtualWrite(5, Temp5);
     //  delay(1000);
 
-//    sprintf(resultstr, "{\"Temp1\":%f,\"Temp2\":%f,\"Temp3\":%f,\"Temp4\":%f,\"Temp5\":%f,\"Temp6\":%f,\"Temp7\":%f,\"Temp8\":%f}", Temp1, Temp2, Temp3, Temp4, Temp5, Temp6, Temp7, Temp8); //Write sensor data to string
-   sprintf(resultstr, "{\"Temp6\":%f,\"Temp7\":%f,\"Temp8\":%f}", Temp6, Temp7, Temp8); //Write sensor data to string
-   Serial.println(resultstr);
+   sprintf(resultstr, "{\"Temp1\":%f,\"Temp2\":%f,\"Temp3\":%f,\"Temp4\":%f,\"Temp5\":%f,\"Temp6\":%f,\"Temp7\":%f,\"Temp8\":%f}", Temp1, Temp2, Temp3, Temp4, Temp5, Temp6, Temp7, Temp8); //Write sensor data to string
+ //  sprintf(resultstr, "{\"Temp6\":%f,\"Temp7\":%f,\"Temp8\":%f}", Temp6, Temp7, Temp8); //Write sensor data to string
 //   sprintf(resultstr, "{\"Temp1\":%f,\"Temp2\":%f,\"Temp3\":%f,\"Temp4\":%f,\"Temp5\":%f}", Temp1, Temp2, Temp3, Temp4, Temp5);
     updateTimer.Update();    // new stuff
 }
